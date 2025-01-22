@@ -18,7 +18,7 @@ namespace MyBhapticsTactsuit
         public bool systemInitialized = false;
         private static bool heartBeatIsActive = false;
         private static bool zombieGrabIsActive = false;
-        private static bool zimplineIsActive = false;
+        private static bool ziplineIsActive = false;
         public static int heartBeatRate = 1000;
         public static string ziplineHand = "";
         public Dictionary<String, Sensation> FeedbackMap = new Dictionary<String, Sensation>();
@@ -27,6 +27,12 @@ namespace MyBhapticsTactsuit
         {
             RegisterAllSensationsFiles();
             InitializeOWO();
+        }
+
+        public void LOG(string logStr, bool isWarning = false)
+        {
+            if (isWarning) Plugin.Log.LogWarning(logStr);
+            else Plugin.Log.LogMessage(logStr);
         }
 
         private void RegisterAllSensationsFiles()
@@ -47,7 +53,7 @@ namespace MyBhapticsTactsuit
                     Sensation test = Sensation.Parse(tactFileStr);
                     FeedbackMap.Add(prefix, test);
                 }
-                catch (Exception e) { Logger.LogError(e); }
+                catch (Exception e) { LOG(e.Message, true); }
 
             }
 
@@ -56,7 +62,7 @@ namespace MyBhapticsTactsuit
 
         private async void InitializeOWO()
         {
-            Logger.LogInfo("Initializing OWO skin");
+            LOG("Initializing OWO skin");
 
             var gameAuth = GameAuth.Create(AllBakedSensations()).WithId("0"); ;
 
@@ -71,9 +77,9 @@ namespace MyBhapticsTactsuit
             if (OWO.ConnectionState == ConnectionState.Connected)
             {
                 suitDisabled = false;
-                Logger.LogInfo("OWO suit connected.");
+                LOG("OWO suit connected.");
             }
-            if (suitDisabled) Logger.LogWarning("OWO is not enabled?!?!");
+            if (suitDisabled) LOG("OWO is not enabled?!?!", true);
         }
 
         public BakedSensation[] AllBakedSensations()
@@ -84,12 +90,12 @@ namespace MyBhapticsTactsuit
             {
                 if (sensation is BakedSensation baked)
                 {
-                    Logger.LogInfo("Registered baked sensation: " + baked.name);
+                    LOG("Registered baked sensation: " + baked.name);
                     result.Add(baked);
                 }
                 else
                 {
-                    Logger.LogWarning("Sensation not baked? " + sensation);
+                    LOG("Sensation not baked? " + sensation);
                     continue;
                 }
             }
@@ -102,13 +108,13 @@ namespace MyBhapticsTactsuit
             string filePath = Directory.GetCurrentDirectory() + "\\Mods\\" + filename;
             if (File.Exists(filePath))
             {
-                Logger.LogInfo("Manual IP file found: " + filePath);
+                LOG("Manual IP file found: " + filePath);
                 var lines = File.ReadLines(filePath);
                 foreach (var line in lines)
                 {
                     IPAddress address;
                     if (IPAddress.TryParse(line, out address)) ips.Add(line);
-                    else Logger.LogWarning("IP not valid? ---" + line + "---");
+                    else LOG("IP not valid? ---" + line + "---", true);
                 }
             }
             return ips.ToArray();
@@ -116,13 +122,13 @@ namespace MyBhapticsTactsuit
 
         ~OWOSkin()
         {
-            Logger.LogWarning("Destructor called");
+            LOG("Destructor called");
             DisconnectOWO();
         }
 
         public void DisconnectOWO()
         {
-            Logger.LogInfo("Disconnecting OWO skin.");
+            LOG("Disconnecting OWO skin.");
             OWO.Disconnect();
         }
 
@@ -131,9 +137,9 @@ namespace MyBhapticsTactsuit
             if (FeedbackMap.ContainsKey(key))
             {
                 OWO.Send(FeedbackMap[key].WithPriority(Priority));
-                Logger.LogInfo("SENSATION: " + key);
+                LOG("SENSATION: " + key);
             }
-            else Logger.LogWarning("Feedback not registered: " + key);
+            else LOG("Feedback not registered: " + key);
         }
 
         public async Task HeartBeatFuncAsync()
@@ -142,6 +148,23 @@ namespace MyBhapticsTactsuit
             {
                 Feel("HeartBeat", 0);
                 await Task.Delay(heartBeatRate);
+            }
+        }
+
+        public async Task ZombieGrabFuncAsync()
+        {
+            while (zombieGrabIsActive)
+            {
+                Feel("JuggernautGrab", 0);
+                await Task.Delay(2000);                
+            }
+        }
+        public async Task ZipLineFuncAsync()
+        {
+            while (ziplineIsActive)
+            {
+                Feel($"Zipline_{ziplineHand}", 0);
+                await Task.Delay(500);                            
             }
         }
     }

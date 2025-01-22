@@ -22,7 +22,7 @@ using Unity.Entities;
 
 namespace AfterTheFall_bhaptics
 {
-    [BepInPlugin("org.bepinex.plugins.AfterTheFall_bhaptics", "After The Fall bhaptics integration", "1.0.0")]
+    [BepInPlugin("org.bepinex.plugins.OWO_AfterTheFall", "After The Fall owo integration", "0.0.1")]
     public class Plugin : BepInEx.IL2CPP.BasePlugin
     {
         internal static new ManualLogSource Log;
