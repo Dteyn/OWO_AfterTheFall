@@ -51,6 +51,9 @@
       <HintPath>D:\GAMES\OCULUS\Software\vertigo-games-snowbreed\BepInEx\unhollowed\Il2Cppmscorlib.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="OWO, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\OWO.2.4.2\lib\net48\OWO.dll</HintPath>
+    </Reference>
     <Reference Include="Snowbreed.Client">
       <HintPath>D:\Games\Oculus\Software\vertigo-games-snowbreed\BepInEx\unhollowed\Snowbreed.Client.dll</HintPath>
       <Private>False</Private>
@@ -109,6 +112,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Properties\config.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,18 +1,150 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using System.Threading;
 using Bhaptics.SDK2;
 using AfterTheFall_bhaptics;
-
-using System.Resources;
-using System.Globalization;
-using System.Collections;
+using OWOGame;
+using System.IO;
+using System.Net;
+using System.Threading.Tasks;
 
 
 namespace MyBhapticsTactsuit
 {
+
+    public class OWOSkin
+    {
+        public bool suitDisabled = true;
+        public bool systemInitialized = false;
+        private static bool heartBeatIsActive = false;
+        private static bool zombieGrabIsActive = false;
+        private static bool zimplineIsActive = false;
+        public static int heartBeatRate = 1000;
+        public static string ziplineHand = "";
+        public Dictionary<String, Sensation> FeedbackMap = new Dictionary<String, Sensation>();
+
+        public OWOSkin()
+        {
+            RegisterAllSensationsFiles();
+            InitializeOWO();
+        }
+
+        private void RegisterAllSensationsFiles()
+        {
+            string configPath = Directory.GetCurrentDirectory() + "\\Mods\\OWO";
+            DirectoryInfo d = new DirectoryInfo(configPath);
+            FileInfo[] Files = d.GetFiles("*.owo", SearchOption.AllDirectories);
+            for (int i = 0; i < Files.Length; i++)
+            {
+                string filename = Files[i].Name;
+                string fullName = Files[i].FullName;
+                string prefix = Path.GetFileNameWithoutExtension(filename);
+                if (filename == "." || filename == "..")
+                    continue;
+                string tactFileStr = File.ReadAllText(fullName);
+                try
+                {
+                    Sensation test = Sensation.Parse(tactFileStr);
+                    FeedbackMap.Add(prefix, test);
+                }
+                catch (Exception e) { Logger.LogError(e); }
+
+            }
+
+            systemInitialized = true;
+        }
+
+        private async void InitializeOWO()
+        {
+            Logger.LogInfo("Initializing OWO skin");
+
+            var gameAuth = GameAuth.Create(AllBakedSensations()).WithId("0"); ;
+
+            OWO.Configure(gameAuth);
+            string[] myIPs = getIPsFromFile("OWO_Manual_IP.txt");
+            if (myIPs.Length == 0) await OWO.AutoConnect();
+            else
+            {
+                await OWO.Connect(myIPs);
+            }
+
+            if (OWO.ConnectionState == ConnectionState.Connected)
+            {
+                suitDisabled = false;
+                Logger.LogInfo("OWO suit connected.");
+            }
+            if (suitDisabled) Logger.LogWarning("OWO is not enabled?!?!");
+        }
+
+        public BakedSensation[] AllBakedSensations()
+        {
+            var result = new List<BakedSensation>();
+
+            foreach (var sensation in FeedbackMap.Values)
+            {
+                if (sensation is BakedSensation baked)
+                {
+                    Logger.LogInfo("Registered baked sensation: " + baked.name);
+                    result.Add(baked);
+                }
+                else
+                {
+                    Logger.LogWarning("Sensation not baked? " + sensation);
+                    continue;
+                }
+            }
+            return result.ToArray();
+        }
+
+        public string[] getIPsFromFile(string filename)
+        {
+            List<string> ips = new List<string>();
+            string filePath = Directory.GetCurrentDirectory() + "\\Mods\\" + filename;
+            if (File.Exists(filePath))
+            {
+                Logger.LogInfo("Manual IP file found: " + filePath);
+                var lines = File.ReadLines(filePath);
+                foreach (var line in lines)
+                {
+                    IPAddress address;
+                    if (IPAddress.TryParse(line, out address)) ips.Add(line);
+                    else Logger.LogWarning("IP not valid? ---" + line + "---");
+                }
+            }
+            return ips.ToArray();
+        }
+
+        ~OWOSkin()
+        {
+            Logger.LogWarning("Destructor called");
+            DisconnectOWO();
+        }
+
+        public void DisconnectOWO()
+        {
+            Logger.LogInfo("Disconnecting OWO skin.");
+            OWO.Disconnect();
+        }
+
+        public void Feel(String key, int Priority, float intensity = 1.0f, float duration = 1.0f)
+        {
+            if (FeedbackMap.ContainsKey(key))
+            {
+                OWO.Send(FeedbackMap[key].WithPriority(Priority));
+                Logger.LogInfo("SENSATION: " + key);
+            }
+            else Logger.LogWarning("Feedback not registered: " + key);
+        }
+
+        public async Task HeartBeatFuncAsync()
+        {
+            while (heartBeatIsActive)
+            {
+                Feel("HeartBeat", 0);
+                await Task.Delay(heartBeatRate);
+            }
+        }
+    }
 
     public class TactsuitVR
     {
