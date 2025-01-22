@@ -1,4 +1,3 @@
-# OWO_AfterTheFall
 ## OWO integration for After the fall videogame
 This mod is based on the work of [Florian](https://github.com/floh-bhaptics).
 
