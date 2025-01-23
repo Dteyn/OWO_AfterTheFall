@@ -19,8 +19,9 @@ namespace MyBhapticsTactsuit
         private static bool heartBeatIsActive = false;
         private static bool zombieGrabIsActive = false;
         private static bool ziplineIsActive = false;
+        private static bool ziplineLIsActive = false;
+        private static bool ziplineRIsActive = false;
         public static int heartBeatRate = 1000;
-        public static string ziplineHand = "";
         public Dictionary<String, Sensation> FeedbackMap = new Dictionary<String, Sensation>();
 
         public OWOSkin()
@@ -161,12 +162,80 @@ namespace MyBhapticsTactsuit
         }
         public async Task ZipLineFuncAsync()
         {
-            while (ziplineIsActive)
+            string toFeel = "";
+
+            while (ziplineRIsActive || ziplineLIsActive)
             {
-                Feel($"Zipline_{ziplineHand}", 0);
-                await Task.Delay(500);                            
+                if (ziplineRIsActive)
+                    toFeel = "Zipline_R";
+
+                if (ziplineLIsActive)
+                    toFeel = "Zipline_L";
+
+                if (ziplineRIsActive && ziplineLIsActive)
+                    toFeel = "Zipline_RL";
+
+                Feel(toFeel, 2);
+                await Task.Delay(500);
+            }
+
+            ziplineIsActive = false;
+        }
+
+        public void StartHeartBeat()
+        {
+            if (heartBeatIsActive) return;
+
+            heartBeatIsActive = true;
+            HeartBeatFuncAsync();
+        }
+
+        public void StopHeartBeat()
+        {
+            heartBeatIsActive = false;
+        }
+
+        public void StartZipline(bool isRight)
+        {
+            if (isRight)
+                ziplineRIsActive = true;
+
+            if (!isRight)
+                ziplineLIsActive = true;
+
+            if (!ziplineIsActive)
+            {
+                ZipLineFuncAsync();
+                ziplineIsActive = true;
+            }
+
+        }
+
+        public void StopZipline(bool isRight)
+        {
+            if (isRight)
+            {
+                ziplineRIsActive = false;
+            }
+            else
+            {
+                ziplineLIsActive = false;
             }
         }
+
+        public void StartZombieGrab()
+        {
+            if (zombieGrabIsActive) return;
+
+            zombieGrabIsActive = true;
+            ZombieGrabFuncAsync();
+        }
+
+        public void StopZombieGrab()
+        {
+            zombieGrabIsActive = false;
+        }
+
     }
 
     public class TactsuitVR
