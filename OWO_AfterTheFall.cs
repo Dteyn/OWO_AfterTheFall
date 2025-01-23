@@ -19,12 +19,13 @@ namespace OWO_AfterTheFall
         public override void Load()
         {
             // Plugin startup logic
-            Log.LogInfo("OWO_AfterTheFall loaded!");
+            Log = base.Log;
+            //Log.LogInfo("OWO_AfterTheFall loaded!");
             owoSkin = new OWOSkin();
-            owoSkin.Feel("HeartBeat",0);
-            // patch all functions
-            var harmony = new Harmony("owo.patch.afterthefall");
-            harmony.PatchAll();
+            //owoSkin.Feel("HeartBeat",0);
+            //// patch all functions
+            //var harmony = new Harmony("owo.patch.afterthefall");
+            //harmony.PatchAll();
         }
 
         [HarmonyPatch(typeof(Gun), "FireBullet", new System.Type[] { typeof(bool), typeof(bool) })]

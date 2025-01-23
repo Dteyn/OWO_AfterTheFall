@@ -25,8 +25,8 @@ namespace OWOSKin
 
         public OWOSkin()
         {
-            RegisterAllSensationsFiles();
-            InitializeOWO();
+            //RegisterAllSensationsFiles();
+            //InitializeOWO();
         }
 
         public void LOG(string logStr, bool isWarning = false)
