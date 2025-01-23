@@ -9,7 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 
 
-namespace OWOSkin
+namespace MyBhapticsTactsuit
 {
 
     public class OWOSkin
@@ -21,7 +21,7 @@ namespace OWOSkin
         private static bool ziplineIsActive = false;
         private static bool ziplineLIsActive = false;
         private static bool ziplineRIsActive = false;
-        public static int heartBeatRate = 1000;
+        private int heartBeatRate = 1000;
         public Dictionary<String, Sensation> FeedbackMap = new Dictionary<String, Sensation>();
 
         public OWOSkin()
@@ -35,6 +35,8 @@ namespace OWOSkin
             if (isWarning) Plugin.Log.LogWarning(logStr);
             else Plugin.Log.LogMessage(logStr);
         }
+
+        public void UpdateHeartBeat(int newRate) => heartBeatRate = newRate; 
 
         private void RegisterAllSensationsFiles()
         {
@@ -259,13 +261,13 @@ namespace OWOSkin
             string keyArm = "RecoilArms" + postfix;
             string keyOtherArm = "RecoilArms" + otherPostfix;
             string keyVest = "Recoil" + gunType + "Vest" + postfix;
-            PlaybackHaptics(keyHand, intensity);
-            PlaybackHaptics(keyArm, intensity);
-            PlaybackHaptics(keyVest, intensity);
+            //Feel(keyHand, intensity);
+            //Feel(keyArm, intensity);
+            //Feel(keyVest, intensity);
             if (dualWield)
             {
-                PlaybackHaptics(keyOtherHand, intensity);
-                PlaybackHaptics(keyOtherArm, intensity);
+                //Feel(keyOtherHand, intensity);
+                //Feel(keyOtherArm, intensity);
             }
         }
 
@@ -275,7 +277,7 @@ namespace OWOSkin
             // 1. An angle in degrees [0, 360] to turn the pattern to the left
             // 2. A shift [-0.5, 0.5] in y-direction (up and down) to move it up or down
             if (suitDisabled) { return; }
-            if (BhapticsSDK2.IsDeviceConnected(PositionType.Head)) PlaybackHaptics("HeadShot");
+            if (BhapticsSDK2.IsDeviceConnected(PositionType.Head)) Feel("HeadShot", 0);
             BhapticsSDK2.Play(key.ToLower(), 1f, 1f, xzAngle, yShift);
         }
     }

@@ -2,7 +2,7 @@
 using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
-using OWOSkin;
+using MyBhapticsTactsuit;
 using UnityEngine;
 using Il2CppSystem;
 using Vertigo.Snowbreed;
@@ -15,14 +15,14 @@ namespace AfterTheFall_bhaptics
     public class Plugin : BepInEx.IL2CPP.BasePlugin
     {
         internal static new ManualLogSource Log;
-        public static OWOSkin.OWOSkin tactsuitVr;
+        public static OWOSkin owoSkin;
 
         public override void Load()
         {
             // Plugin startup logic
             Log.LogInfo("Plugin AfterTheFall_bhaptics is loaded!");
-            tactsuitVr = new OWOSkin.OWOSkin();
-            tactsuitVr.Feel("HeartBeat",0);
+            owoSkin = new OWOSkin();
+            owoSkin.Feel("HeartBeat",0);
             // patch all functions
             var harmony = new Harmony("bhaptics.patch.afterthefall");
             harmony.PatchAll();
@@ -44,11 +44,11 @@ namespace AfterTheFall_bhaptics
                 bool dualWield = (__instance.grabbedHands.Count == 2);
                 if (shotgunsIds.Contains(__instance.GunData.AmmoType))
                 {
-                    tactsuitVr.ShootRecoil("Shotgun", isRight, dualWield);
+                    owoSkin.ShootRecoil("Shotgun", isRight, dualWield);
                 }
                 else
                 {
-                    tactsuitVr.ShootRecoil("Pistol", isRight, dualWield);
+                    owoSkin.ShootRecoil("Pistol", isRight, dualWield);
                 }
             }
         }
@@ -73,22 +73,22 @@ namespace AfterTheFall_bhaptics
                     myRotation *= -1f;
                     if (myRotation < 0f) { myRotation = 360f + myRotation; }
                     //Log.LogWarning("Rotation " + myRotation);
-                    tactsuitVr.PlayBackHit("Slash", myRotation, 0.0f);
+                    owoSkin.PlayBackHit("Slash", myRotation, 0.0f);
 
                     //Low Health
                     if (__instance.Health < (__instance.MaxHealth * 25 / 100))
                     {
                         //start heartbeat lowhealth
-                        TactsuitVR.heartBeatRate = 1000;
-                        tactsuitVr.StartHeartBeat();
+                        owoSkin.UpdateHeartBeat(1000);
+                        owoSkin.StartHeartBeat();
                     }
 
                     //Downed, frozen
                     if (__instance.IsDowned)
                     {
-                        tactsuitVr.Feel("Frozen", 0);
-                        TactsuitVR.heartBeatRate = 4000;
-                        tactsuitVr.StartHeartBeat();
+                        owoSkin.Feel("Frozen", 0);
+                        owoSkin.UpdateHeartBeat(4000);
+                        owoSkin.StartHeartBeat();
                     }
                 }
             }
@@ -99,11 +99,11 @@ namespace AfterTheFall_bhaptics
         {
             public static void Postfix(ClientSessionGameSystem __instance)
             {
-                tactsuitVr.StopHeartBeat();
-                tactsuitVr.StopAllHapticFeedback();
+                owoSkin.StopHeartBeat();
+                owoSkin.StopAllHapticFeedback();
                 if(__instance.SessionEndingType == SessionGameSystem.ESessionEndingType.Failed)
                 {
-                    tactsuitVr.Feel("Death", 0);
+                    owoSkin.Feel("Death", 0);
                 }
             }
         }
@@ -137,17 +137,17 @@ namespace AfterTheFall_bhaptics
                 Vertigo.ECS.Entity localPawn = LightweightDebug.GetLocalPawn();
                 if (__instance.Entity.Name.Equals(localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    tactsuitVr.Feel("Healing", 0);
+                    owoSkin.Feel("Healing", 0);
                     if (__instance.Health >= (__instance.MaxHealth * 25 / 100))
                     {
                         //stop heartbeat lowhealth
-                        tactsuitVr.StopHeartBeat();
+                        owoSkin.StopHeartBeat();
                     }
                     else
                     {
                         //start heartbeat lowhealth in case you healed from frozen state and not enough health
-                        TactsuitVR.heartBeatRate = 1000;
-                        tactsuitVr.StartHeartBeat();
+                        owoSkin.UpdateHeartBeat(1000);
+                        owoSkin.StartHeartBeat();
                     }
                 }
             }
@@ -161,7 +161,7 @@ namespace AfterTheFall_bhaptics
                 Vertigo.ECS.Entity localPawn = LightweightDebug.GetLocalPawn();
                 if (target.Entity.Name.Equals(localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    tactsuitVr.StartZombieGrab();
+                    owoSkin.StartZombieGrab();
                 }
             }
         }
@@ -177,11 +177,11 @@ namespace AfterTheFall_bhaptics
                     if (__instance.targetEntityModuleData.targetPawnTrackedTransform.Entity.Name.Equals(
                         localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
                     {
-                        tactsuitVr.StopZombieGrab();
+                        owoSkin.StopZombieGrab();
                     }
                 } catch (System.Exception)
                 {
-                    tactsuitVr.StopZombieGrab();
+                    owoSkin.StopZombieGrab();
                 }
             }
         }
@@ -195,7 +195,7 @@ namespace AfterTheFall_bhaptics
                 if (__instance.Owner.identityModule.Entity.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase) && __instance.Owner.CanBeActivated)
                 {
-                    tactsuitVr.Feel("MissilesArms_" + (__instance.Owner.isEquippedOnLeftHand ? "L" : "R"), 0);
+                    owoSkin.Feel("MissilesArms_" + (__instance.Owner.isEquippedOnLeftHand ? "L" : "R"), 0);
                 }
             }
         }
@@ -209,7 +209,7 @@ namespace AfterTheFall_bhaptics
                 if (__instance.identityModule.Entity.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    tactsuitVr.Feel("ShockwaveArms_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 0);
+                    owoSkin.Feel("ShockwaveArms_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 0);
                 }
             }
         }
@@ -223,7 +223,7 @@ namespace AfterTheFall_bhaptics
                 if (__instance.identityModule.Entity.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase) && __instance.CanBeActivated)
                 {
-                    tactsuitVr.Feel("SawbladeArms_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 0);
+                    owoSkin.Feel("SawbladeArms_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 0);
                 }
             }
         }
@@ -237,7 +237,7 @@ namespace AfterTheFall_bhaptics
                 if (pawn.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    tactsuitVr.StartZipline(handSide == EHandSide.Right);
+                    owoSkin.StartZipline(handSide == EHandSide.Right);
                 }
             }
         }
@@ -251,7 +251,7 @@ namespace AfterTheFall_bhaptics
                 if (pawn.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    tactsuitVr.StopZipline(handSide == EHandSide.Right);
+                    owoSkin.StopZipline(handSide == EHandSide.Right);
                 }
             }
         }
@@ -296,7 +296,7 @@ namespace AfterTheFall_bhaptics
                 if (entity.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    tactsuitVr.Feel("PadlockArms_" + (handSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
+                    owoSkin.Feel("PadlockArms_" + (handSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
                 }
             }
         }
@@ -313,7 +313,7 @@ namespace AfterTheFall_bhaptics
                 if (__instance.Entity.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    tactsuitVr.Feel("FootStep_" + (bhaptics_FootStep.rightFoot ? "R" : "L"), 0);
+                    owoSkin.Feel("FootStep_" + (bhaptics_FootStep.rightFoot ? "R" : "L"), 0);
                     bhaptics_FootStep.rightFoot = !bhaptics_FootStep.rightFoot;
                 }
             }
@@ -329,7 +329,7 @@ namespace AfterTheFall_bhaptics
                 {
                     return;
                 }
-                tactsuitVr.Feel("MagazineEjectedArms_" + (__instance.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
+                owoSkin.Feel("MagazineEjectedArms_" + (__instance.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
             }
         }
 
@@ -344,7 +344,7 @@ namespace AfterTheFall_bhaptics
                     return;
                 }
 
-                tactsuitVr.Feel("MagazineReloadingArms_" + (__instance.gun.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
+                owoSkin.Feel("MagazineReloadingArms_" + (__instance.gun.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
             }
         }
 
@@ -359,7 +359,7 @@ namespace AfterTheFall_bhaptics
                     return;
                 }
 
-                tactsuitVr.Feel("MagazineLoadedArms_" + (__instance.gun.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
+                owoSkin.Feel("MagazineLoadedArms_" + (__instance.gun.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
             }
         }
     }
