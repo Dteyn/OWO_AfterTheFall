@@ -15,14 +15,14 @@ namespace AfterTheFall_bhaptics
     public class Plugin : BepInEx.IL2CPP.BasePlugin
     {
         internal static new ManualLogSource Log;
-        public static TactsuitVR tactsuitVr;
+        public static OWOSkin tactsuitVr;
 
         public override void Load()
         {
             // Plugin startup logic
             Log.LogInfo("Plugin AfterTheFall_bhaptics is loaded!");
-            tactsuitVr = new TactsuitVR();
-            tactsuitVr.PlaybackHaptics("HeartBeat");
+            tactsuitVr = new OWOSkin();
+            tactsuitVr.Feel("HeartBeat",0);
             // patch all functions
             var harmony = new Harmony("bhaptics.patch.afterthefall");
             harmony.PatchAll();
@@ -86,7 +86,7 @@ namespace AfterTheFall_bhaptics
                     //Downed, frozen
                     if (__instance.IsDowned)
                     {
-                        tactsuitVr.PlaybackHaptics("Frozen");
+                        tactsuitVr.Feel("Frozen", 0);
                         TactsuitVR.heartBeatRate = 4000;
                         tactsuitVr.StartHeartBeat();
                     }
@@ -103,7 +103,7 @@ namespace AfterTheFall_bhaptics
                 tactsuitVr.StopAllHapticFeedback();
                 if(__instance.SessionEndingType == SessionGameSystem.ESessionEndingType.Failed)
                 {
-                    tactsuitVr.PlaybackHaptics("Death");
+                    tactsuitVr.Feel("Death", 0);
                 }
             }
         }
@@ -122,9 +122,9 @@ namespace AfterTheFall_bhaptics
                 if (module != null && distance < explosionDistance)
                 {
                     float intensity = (explosionDistance - distance) * 1.5f / explosionDistance;
-                    tactsuitVr.PlaybackHaptics("ExplosionBelly", intensity);
-                    tactsuitVr.PlaybackHaptics("ExplosionFeet", intensity);
-                    tactsuitVr.PlaybackHaptics("ExplosionHead", intensity);
+                    //tactsuitVr.Feel("ExplosionBelly", intensity);
+                    //tactsuitVr.Feel("ExplosionFeet", intensity);
+                    //tactsuitVr.Feel("ExplosionHead", intensity);
                 }
             }
         }
@@ -137,7 +137,7 @@ namespace AfterTheFall_bhaptics
                 Vertigo.ECS.Entity localPawn = LightweightDebug.GetLocalPawn();
                 if (__instance.Entity.Name.Equals(localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    tactsuitVr.PlaybackHaptics("Healing");
+                    tactsuitVr.Feel("Healing", 0);
                     if (__instance.Health >= (__instance.MaxHealth * 25 / 100))
                     {
                         //stop heartbeat lowhealth
@@ -195,8 +195,7 @@ namespace AfterTheFall_bhaptics
                 if (__instance.Owner.identityModule.Entity.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase) && __instance.Owner.CanBeActivated)
                 {
-                    tactsuitVr.PlaybackHaptics("MissilesHands_" + (__instance.Owner.isEquippedOnLeftHand ? "L" : "R"));
-                    tactsuitVr.PlaybackHaptics("MissilesArms_" + (__instance.Owner.isEquippedOnLeftHand ? "L" : "R"));
+                    tactsuitVr.Feel("MissilesArms_" + (__instance.Owner.isEquippedOnLeftHand ? "L" : "R"), 0);
                 }
             }
         }
@@ -210,8 +209,7 @@ namespace AfterTheFall_bhaptics
                 if (__instance.identityModule.Entity.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    tactsuitVr.PlaybackHaptics("ShockwaveHands_" + (__instance.isEquippedOnLeftHand ? "L" : "R"));
-                    tactsuitVr.PlaybackHaptics("ShockwaveArms_" + (__instance.isEquippedOnLeftHand ? "L" : "R"));
+                    tactsuitVr.Feel("ShockwaveArms_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 0);
                 }
             }
         }
@@ -225,8 +223,7 @@ namespace AfterTheFall_bhaptics
                 if (__instance.identityModule.Entity.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase) && __instance.CanBeActivated)
                 {
-                    tactsuitVr.PlaybackHaptics("SawbladeHands_" + (__instance.isEquippedOnLeftHand ? "L" : "R"));
-                    tactsuitVr.PlaybackHaptics("SawbladeArms_" + (__instance.isEquippedOnLeftHand ? "L" : "R"));
+                    tactsuitVr.Feel("SawbladeArms_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 0);
                 }
             }
         }
@@ -240,8 +237,7 @@ namespace AfterTheFall_bhaptics
                 if (pawn.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    TactsuitVR.ziplineHand = (handSide == EHandSide.Right) ? "R" : "L";
-                    tactsuitVr.StartZipline();
+                    tactsuitVr.StartZipline(handSide == EHandSide.Right);
                 }
             }
         }
@@ -249,13 +245,13 @@ namespace AfterTheFall_bhaptics
         [HarmonyPatch(typeof(Zipline), "StopUse")]
         public class OnZipLineExit
         {
-            public static void Postfix(Zipline __instance, Vertigo.ECS.Entity pawn)
+            public static void Postfix(Zipline __instance, Vertigo.ECS.Entity pawn, EHandSide handSide)
             {
                 Vertigo.ECS.Entity localPawn = LightweightDebug.GetLocalPawn();
                 if (pawn.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    tactsuitVr.StopZipline();
+                    tactsuitVr.StopZipline(handSide == EHandSide.Right);
                 }
             }
         }
@@ -300,8 +296,7 @@ namespace AfterTheFall_bhaptics
                 if (entity.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    tactsuitVr.PlaybackHaptics("PadlockHands_" + (handSide == Vertigo.VR.EHandSide.Right ? "R" : "L"));
-                    tactsuitVr.PlaybackHaptics("PadlockArms_" + (handSide == Vertigo.VR.EHandSide.Right ? "R" : "L"));
+                    tactsuitVr.Feel("PadlockArms_" + (handSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
                 }
             }
         }
@@ -318,7 +313,7 @@ namespace AfterTheFall_bhaptics
                 if (__instance.Entity.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    tactsuitVr.PlaybackHaptics("FootStep_" + (bhaptics_FootStep.rightFoot ? "R" : "L"));
+                    tactsuitVr.Feel("FootStep_" + (bhaptics_FootStep.rightFoot ? "R" : "L"), 0);
                     bhaptics_FootStep.rightFoot = !bhaptics_FootStep.rightFoot;
                 }
             }
@@ -334,8 +329,7 @@ namespace AfterTheFall_bhaptics
                 {
                     return;
                 }
-                tactsuitVr.PlaybackHaptics("MagazineEjectedHands_" + (__instance.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"));
-                tactsuitVr.PlaybackHaptics("MagazineEjectedArms_" + (__instance.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"));
+                tactsuitVr.Feel("MagazineEjectedArms_" + (__instance.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
             }
         }
 
@@ -350,8 +344,7 @@ namespace AfterTheFall_bhaptics
                     return;
                 }
 
-                tactsuitVr.PlaybackHaptics("MagazineReloadingHands_" + (__instance.gun.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"));
-                tactsuitVr.PlaybackHaptics("MagazineReloadingArms_" + (__instance.gun.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"));
+                tactsuitVr.Feel("MagazineReloadingArms_" + (__instance.gun.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
             }
         }
 
@@ -366,8 +359,7 @@ namespace AfterTheFall_bhaptics
                     return;
                 }
 
-                tactsuitVr.PlaybackHaptics("MagazineLoadedHands_" + (__instance.gun.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"));
-                tactsuitVr.PlaybackHaptics("MagazineLoadedArms_" + (__instance.gun.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"));
+                tactsuitVr.Feel("MagazineLoadedArms_" + (__instance.gun.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
             }
         }
     }

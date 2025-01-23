@@ -236,6 +236,48 @@ namespace MyBhapticsTactsuit
             zombieGrabIsActive = false;
         }
 
+        public void StopAllHapticFeedback()
+        {
+            StopHeartBeat();
+            StopZombieGrab();
+            StopZipline(true);
+            StopZipline(false);
+
+            OWO.Stop();
+        }
+
+        public void ShootRecoil(string gunType, bool isRightHand, bool dualWield = false, float intensity = 1.0f)
+        {
+            // Melee feedback pattern
+            if (suitDisabled) { return; }
+            if (gunType == "Pistol") intensity = 0.8f;
+            string postfix = "_L";
+            string otherPostfix = "_R";
+            if (isRightHand) { postfix = "_R"; otherPostfix = "_L"; }
+            string keyHand = "RecoilHands" + postfix;
+            string keyOtherHand = "RecoilHands" + otherPostfix;
+            string keyArm = "RecoilArms" + postfix;
+            string keyOtherArm = "RecoilArms" + otherPostfix;
+            string keyVest = "Recoil" + gunType + "Vest" + postfix;
+            PlaybackHaptics(keyHand, intensity);
+            PlaybackHaptics(keyArm, intensity);
+            PlaybackHaptics(keyVest, intensity);
+            if (dualWield)
+            {
+                PlaybackHaptics(keyOtherHand, intensity);
+                PlaybackHaptics(keyOtherArm, intensity);
+            }
+        }
+
+        public void PlayBackHit(String key, float xzAngle, float yShift)
+        {
+            // two parameters can be given to the pattern to move it on the vest:
+            // 1. An angle in degrees [0, 360] to turn the pattern to the left
+            // 2. A shift [-0.5, 0.5] in y-direction (up and down) to move it up or down
+            if (suitDisabled) { return; }
+            if (BhapticsSDK2.IsDeviceConnected(PositionType.Head)) PlaybackHaptics("HeadShot");
+            BhapticsSDK2.Play(key.ToLower(), 1f, 1f, xzAngle, yShift);
+        }
     }
 
     public class TactsuitVR
@@ -247,7 +289,6 @@ namespace MyBhapticsTactsuit
         private static ManualResetEvent ZombieGrab_mrse = new ManualResetEvent(false);
         private static ManualResetEvent ZipLine_mrse = new ManualResetEvent(false);
         public static int heartBeatRate = 1000;
-        public static string ziplineHand = "";
 
         public void HeartBeatFunc()
         {
