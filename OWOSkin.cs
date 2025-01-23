@@ -218,11 +218,11 @@ namespace MyBhapticsTactsuit
 
             LOG("Initializing suit");
             // Default configuration exported in the portal, in case the PC is not online
-            var config = System.Text.Encoding.UTF8.GetString(AfterTheFall_bhaptics.Properties.Resource1.config);
-            // Initialize with appID, apiKey, and default value in case it is unreachable
-            var res = BhapticsSDK2.Initialize("VDgsXkzvLPIfwIBOTAX7", "uVIGumoIkQjWCnMxniVz", config);
+            //var config = System.Text.Encoding.UTF8.GetString(AfterTheFall_bhaptics.Properties.Resource1.config);
+            //// Initialize with appID, apiKey, and default value in case it is unreachable
+            //var res = BhapticsSDK2.Initialize("VDgsXkzvLPIfwIBOTAX7", "uVIGumoIkQjWCnMxniVz", config);
             // if it worked, enable the suit
-            suitDisabled = res != 0;
+            //suitDisabled = res != 0;
 
             LOG("Starting HeartBeat thread...");
             Thread HeartBeatThread = new Thread(HeartBeatFunc);

@@ -39,10 +39,6 @@
     <Reference Include="BepInEx">
       <HintPath>Libraries\BepInEx.dll</HintPath>
     </Reference>
-    <Reference Include="BepInEx.Core">
-      <HintPath>Libraries\BepInEx.Core.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="BepInEx.IL2CPP">
       <HintPath>Libraries\BepInEx.IL2CPP.dll</HintPath>
       <Private>False</Private>
@@ -51,18 +47,18 @@
       <HintPath>libs\Bhaptics.Tact.dll</HintPath>
     </Reference>
     <Reference Include="Il2Cppmscorlib">
-      <HintPath>D:\GAMES\OCULUS\Software\vertigo-games-snowbreed\BepInEx\unhollowed\Il2Cppmscorlib.dll</HintPath>
+      <HintPath>Libraries\Il2Cppmscorlib.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="OWO, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\OWO.2.4.2\lib\net48\OWO.dll</HintPath>
     </Reference>
     <Reference Include="Snowbreed.Client">
-      <HintPath>D:\Games\Oculus\Software\vertigo-games-snowbreed\BepInEx\unhollowed\Snowbreed.Client.dll</HintPath>
+      <HintPath>Libraries\Snowbreed.Client.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Snowbreed.Shared">
-      <HintPath>D:\GAMES\OCULUS\Software\vertigo-games-snowbreed\BepInEx\unhollowed\Snowbreed.Shared.dll</HintPath>
+      <HintPath>Libraries\Snowbreed.Shared.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -78,23 +74,23 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>D:\Games\Oculus\Software\vertigo-games-snowbreed\BepInEx\unhollowed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>Libraries\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>D:\Games\Oculus\Software\vertigo-games-snowbreed\BepInEx\unhollowed\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>Libraries\UnityEngine.PhysicsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Vertigo.Animation">
-      <HintPath>D:\Games\Oculus\Software\vertigo-games-snowbreed\BepInEx\unhollowed\Vertigo.Animation.dll</HintPath>
+      <HintPath>Libraries\Vertigo.Animation.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Vertigo.Core">
-      <HintPath>D:\Games\Oculus\Software\vertigo-games-snowbreed\BepInEx\unhollowed\Vertigo.Core.dll</HintPath>
+      <HintPath>Libraries\Vertigo.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Vertigo.VR">
-      <HintPath>D:\Games\Oculus\Software\vertigo-games-snowbreed\BepInEx\unhollowed\Vertigo.VR.dll</HintPath>
+      <HintPath>Libraries\Vertigo.VR.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>

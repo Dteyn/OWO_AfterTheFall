@@ -1,24 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
 using MyBhapticsTactsuit;
 using UnityEngine;
 using Il2CppSystem;
-using Vertigo.PlayerBody;
 using Vertigo.Snowbreed;
 using Vertigo.Snowbreed.Client;
-using static AfterTheFall_bhaptics.Plugin;
-using Vertigo.ECS;
-using Il2CppSystem.Collections;
-using UnhollowerBaseLib;
-using Vertigo.VRShooter;
 using Vertigo.VR;
-using Unity.Entities;
 
 namespace AfterTheFall_bhaptics
 {
@@ -31,7 +20,6 @@ namespace AfterTheFall_bhaptics
         public override void Load()
         {
             // Plugin startup logic
-            Log = base.Log;
             Log.LogInfo("Plugin AfterTheFall_bhaptics is loaded!");
             tactsuitVr = new TactsuitVR();
             tactsuitVr.PlaybackHaptics("HeartBeat");
