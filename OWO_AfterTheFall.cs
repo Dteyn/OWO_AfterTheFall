@@ -1,17 +1,16 @@
 ﻿using System.Linq;
-using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
-using MyBhapticsTactsuit;
+using OWOSKin;
 using UnityEngine;
 using Il2CppSystem;
 using Vertigo.Snowbreed;
 using Vertigo.Snowbreed.Client;
 using Vertigo.VR;
 
-namespace AfterTheFall_bhaptics
+namespace OWO_AfterTheFall
 {
-    [BepInPlugin("org.bepinex.plugins.OWO_AfterTheFall", "After The Fall owo integration", "0.0.1")]
+    [BepInEx.BepInPlugin("org.bepinex.plugins.OWO_AfterTheFall", "After The Fall owo integration", "0.0.1")]
     public class Plugin : BepInEx.IL2CPP.BasePlugin
     {
         internal static new ManualLogSource Log;
@@ -20,11 +19,11 @@ namespace AfterTheFall_bhaptics
         public override void Load()
         {
             // Plugin startup logic
-            Log.LogInfo("Plugin AfterTheFall_bhaptics is loaded!");
+            Log.LogInfo("OWO_AfterTheFall loaded!");
             owoSkin = new OWOSkin();
             owoSkin.Feel("HeartBeat",0);
             // patch all functions
-            var harmony = new Harmony("bhaptics.patch.afterthefall");
+            var harmony = new Harmony("owo.patch.afterthefall");
             harmony.PatchAll();
         }
 

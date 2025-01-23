@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using AfterTheFall_bhaptics;
+using OWO_AfterTheFall;
 using OWOGame;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 
 
-namespace MyBhapticsTactsuit
+namespace OWOSKin
 {
 
     public class OWOSkin
@@ -136,6 +136,8 @@ namespace MyBhapticsTactsuit
 
         public void Feel(String key, int Priority, float intensity = 1.0f, float duration = 1.0f)
         {
+            LOG("DEBUG-LOG-SENSATION: " + key);
+
             if (FeedbackMap.ContainsKey(key))
             {
                 OWO.Send(FeedbackMap[key].WithPriority(Priority));

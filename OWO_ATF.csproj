@@ -36,8 +36,9 @@
       <HintPath>Libraries\0Harmony.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="BepInEx">
-      <HintPath>Libraries\BepInEx.dll</HintPath>
+    <Reference Include="BepInEx.Core">
+      <HintPath>Libraries\BepInEx.Core.dll</HintPath>
+      <Aliases>global</Aliases>
     </Reference>
     <Reference Include="BepInEx.IL2CPP">
       <HintPath>Libraries\BepInEx.IL2CPP.dll</HintPath>
