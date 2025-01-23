@@ -43,9 +43,6 @@
       <HintPath>Libraries\BepInEx.IL2CPP.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Bhaptics.Tact">
-      <HintPath>libs\Bhaptics.Tact.dll</HintPath>
-    </Reference>
     <Reference Include="Il2Cppmscorlib">
       <HintPath>Libraries\Il2Cppmscorlib.dll</HintPath>
       <Private>False</Private>

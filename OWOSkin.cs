@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using Bhaptics.SDK2;
 using AfterTheFall_bhaptics;
 using OWOGame;
 using System.IO;
@@ -277,8 +276,8 @@ namespace MyBhapticsTactsuit
             // 1. An angle in degrees [0, 360] to turn the pattern to the left
             // 2. A shift [-0.5, 0.5] in y-direction (up and down) to move it up or down
             if (suitDisabled) { return; }
-            if (BhapticsSDK2.IsDeviceConnected(PositionType.Head)) Feel("HeadShot", 0);
-            BhapticsSDK2.Play(key.ToLower(), 1f, 1f, xzAngle, yShift);
+            OWO.Send(OWOGame.Sensation.Dart);
+            //BhapticsSDK2.Play(key.ToLower(), 1f, 1f, xzAngle, yShift);
         }
     }
 }
