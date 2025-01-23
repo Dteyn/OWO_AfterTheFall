@@ -2,7 +2,7 @@
 using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
-using MyBhapticsTactsuit;
+using OWOSkin;
 using UnityEngine;
 using Il2CppSystem;
 using Vertigo.Snowbreed;
@@ -15,13 +15,13 @@ namespace AfterTheFall_bhaptics
     public class Plugin : BepInEx.IL2CPP.BasePlugin
     {
         internal static new ManualLogSource Log;
-        public static OWOSkin tactsuitVr;
+        public static OWOSkin.OWOSkin tactsuitVr;
 
         public override void Load()
         {
             // Plugin startup logic
             Log.LogInfo("Plugin AfterTheFall_bhaptics is loaded!");
-            tactsuitVr = new OWOSkin();
+            tactsuitVr = new OWOSkin.OWOSkin();
             tactsuitVr.Feel("HeartBeat",0);
             // patch all functions
             var harmony = new Harmony("bhaptics.patch.afterthefall");
