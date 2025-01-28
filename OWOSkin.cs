@@ -214,16 +214,10 @@ namespace OWOSKin
 
         }
 
-        public void StopZipline(bool isRight)
+        public void StopZipline()
         {
-            if (isRight)
-            {
-                ziplineRIsActive = false;
-            }
-            else
-            {
-                ziplineLIsActive = false;
-            }
+            ziplineRIsActive = false;
+            ziplineLIsActive = false;
         }
 
         public void StartZombieGrab()
@@ -243,8 +237,7 @@ namespace OWOSKin
         {
             StopHeartBeat();
             StopZombieGrab();
-            StopZipline(true);
-            StopZipline(false);
+            StopZipline();            
 
             OWO.Stop();
         }

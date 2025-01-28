@@ -193,49 +193,49 @@ namespace OWO_AfterTheFall
         [HarmonyPatch(typeof(MissileCombatDeviceLocalController), "StopUse")]
         public class OnCombatDeviceItemUse
         {
-            //public static void Postfix(MissileCombatDeviceLocalController __instance)
-            //{
-            //    Vertigo.ECS.Entity localPawn = LightweightDebug.GetLocalPawn();
-            //    if (__instance.Owner.identityModule.Entity.Name.Equals(
-            //        localPawn.Name, System.StringComparison.OrdinalIgnoreCase) && __instance.Owner.CanBeActivated)
-            //    {
-            //        owoSkin.Feel("MissilesArms_" + (__instance.Owner.isEquippedOnLeftHand ? "L" : "R"), 0);
-            //    }
-            //}
+            public static void Postfix(MissileCombatDeviceLocalController __instance)
+            {
+                Vertigo.ECS.Entity localPawn = LightweightDebug.GetLocalPawn();
+                if (__instance.Owner.identityModule.Entity.Name.Equals(
+                    localPawn.Name, System.StringComparison.OrdinalIgnoreCase) && __instance.Owner.CanBeActivated)
+                {
+                    owoSkin.Feel("MissilesArms_" + (__instance.Owner.isEquippedOnLeftHand ? "L" : "R"), 0);
+                }
+            }
         }
 
         [HarmonyPatch(typeof(ShockwavePunchDeviceItem), "SpawnExplosion")]
         public class OnShockwavePunchDeviceItemUse
         {
-            //public static void Postfix(ShockwavePunchDeviceItem __instance)
-            //{
-            //    Vertigo.ECS.Entity localPawn = LightweightDebug.GetLocalPawn();
-            //    if (__instance.identityModule.Entity.Name.Equals(
-            //        localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
-            //    {
-            //        owoSkin.Feel("ShockwaveArms_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 0);
-            //    }
-            //}
+            public static void Postfix(ShockwavePunchDeviceItem __instance)
+            {
+                Vertigo.ECS.Entity localPawn = LightweightDebug.GetLocalPawn();
+                if (__instance.identityModule.Entity.Name.Equals(
+                    localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    owoSkin.Feel("ShockwaveArms_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 0);
+                }
+            }
         }
 
         [HarmonyPatch(typeof(SawbladeDeviceItem), "StopUse")]
         public class OnSawbladeDeviceItemUse
         {
-            //public static void Postfix(SawbladeDeviceItem __instance)
-            //{
-            //    Vertigo.ECS.Entity localPawn = LightweightDebug.GetLocalPawn();
-            //    if (__instance.identityModule.Entity.Name.Equals(
-            //        localPawn.Name, System.StringComparison.OrdinalIgnoreCase) && __instance.CanBeActivated)
-            //    {
-            //        owoSkin.Feel("SawbladeArms_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 0);
-            //    }
-            //}
+            public static void Postfix(SawbladeDeviceItem __instance)
+            {
+                Vertigo.ECS.Entity localPawn = LightweightDebug.GetLocalPawn();
+                if (__instance.identityModule.Entity.Name.Equals(
+                    localPawn.Name, System.StringComparison.OrdinalIgnoreCase) && __instance.CanBeActivated)
+                {
+                    owoSkin.Feel("SawbladeArms_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 0);
+                }
+            }
         }
 
         [HarmonyPatch(typeof(ZiplineAttachableTransform), "StartZiplining")]
         public class OnZipLineEnter
         {
-            public static void Postfix(Zipline ziplineToUse, Entity pawn, EHandSide handSide, Action<uint, uint, ZiplineAttachableTransformHelper.EZiplineAttachableTransformStateIds, EHandSide> onSliderStateUpdatedCallback)
+            public static void Postfix(ZiplineAttachableTransform __instance, Vertigo.ECS.Entity pawn, EHandSide handSide)
             {
                 Vertigo.ECS.Entity localPawn = LightweightDebug.GetLocalPawn();
                 if (pawn.Name.Equals(
@@ -249,15 +249,15 @@ namespace OWO_AfterTheFall
         [HarmonyPatch(typeof(Zipline), "StopUse")]
         public class OnZipLineExit
         {
-            //public static void Postfix(Zipline __instance, Vertigo.ECS.Entity pawn, EHandSide handSide)
-            //{
-            //    Vertigo.ECS.Entity localPawn = LightweightDebug.GetLocalPawn();
-            //    if (pawn.Name.Equals(
-            //        localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
-            //    {
-            //        owoSkin.StopZipline(handSide == EHandSide.Right);
-            //    }
-            //}
+            public static void Postfix(Zipline __instance, Entity pawn)
+            {
+                Entity localPawn = LightweightDebug.GetLocalPawn();
+                if (pawn.Name.Equals(
+                    localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    owoSkin.StopZipline();
+                }
+            }
         }
         /*
         [HarmonyPatch(typeof(BoosterSpeedBuffCommand), "ApplyBoost")]
@@ -294,77 +294,77 @@ namespace OWO_AfterTheFall
         [HarmonyPatch(typeof(ClientPadlock), "HandleOnHandEnterDetectionVolumeEvent")]
         public class OnClientPadlock
         {
-            //public static void Postfix(ClientPadlock __instance, Vertigo.ECS.Entity entity, Vertigo.VR.EHandSide handSide)
-            //{
-            //    Vertigo.ECS.Entity localPawn = LightweightDebug.GetLocalPawn();
-            //    if (entity.Name.Equals(
-            //        localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
-            //    {
-            //        owoSkin.Feel("PadlockArms_" + (handSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
-            //    }
-            //}
+            public static void Postfix(ClientPadlock __instance, Vertigo.ECS.Entity entity, Vertigo.VR.EHandSide handSide)
+            {
+                Vertigo.ECS.Entity localPawn = LightweightDebug.GetLocalPawn();
+                if (entity.Name.Equals(
+                    localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    owoSkin.Feel("PadlockArms_" + (handSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
+                }
+            }
         }
 
         [HarmonyPatch(typeof(PlayerAudioModule), "PlayFootstepLocalPlayer")]
         public class bhaptics_FootStep
         {
-            //private static bool rightFoot = false;
+            private static bool rightFoot = false;
 
-            //[HarmonyPostfix]
-            //public static void Postfix(PlayerAudioModule __instance)
-            //{
-            //    Vertigo.ECS.Entity localPawn = LightweightDebug.GetLocalPawn();
-            //    if (__instance.Entity.Name.Equals(
-            //        localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
-            //    {
-            //        owoSkin.Feel("FootStep_" + (bhaptics_FootStep.rightFoot ? "R" : "L"), 0);
-            //        bhaptics_FootStep.rightFoot = !bhaptics_FootStep.rightFoot;
-            //    }
-            //}
+            [HarmonyPostfix]
+            public static void Postfix(PlayerAudioModule __instance)
+            {
+                Vertigo.ECS.Entity localPawn = LightweightDebug.GetLocalPawn();
+                if (__instance.Entity.Name.Equals(
+                    localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    owoSkin.Feel("FootStep_" + (bhaptics_FootStep.rightFoot ? "R" : "L"), 0);
+                    bhaptics_FootStep.rightFoot = !bhaptics_FootStep.rightFoot;
+                }
+            }
         }
 
         [HarmonyPatch(typeof(Gun), "OnMagazineEjected")]
         public class bhaptics_EjectMagazine
         {
-            //[HarmonyPostfix]
-            //public static void Postfix(Gun __instance)
-            //{
-            //    if (!__instance.IsEquippedLocally)
-            //    {
-            //        return;
-            //    }
-            //    owoSkin.Feel("MagazineEjectedArms_" + (__instance.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
-            //}
+            [HarmonyPostfix]
+            public static void Postfix(Gun __instance)
+            {
+                if (!__instance.IsEquippedLocally)
+                {
+                    return;
+                }
+                owoSkin.Feel("MagazineEjectedArms_" + (__instance.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
+            }
         }
 
         [HarmonyPatch(typeof(GunAmmoInserter), "HandleAmmoInsertedEvent")]
         public class bhaptics_Reloading
         {
-            //[HarmonyPostfix]
-            //public static void Postfix(GunAmmoInserter __instance)
-            //{
-            //    if (!__instance.gun.IsEquippedLocally)
-            //    {
-            //        return;
-            //    }
+            [HarmonyPostfix]
+            public static void Postfix(GunAmmoInserter __instance)
+            {
+                if (!__instance.gun.IsEquippedLocally)
+                {
+                    return;
+                }
 
-            //    owoSkin.Feel("MagazineReloadingArms_" + (__instance.gun.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
-            //}
+                owoSkin.Feel("MagazineReloadingArms_" + (__instance.gun.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
+            }
         }
 
         [HarmonyPatch(typeof(GunAmmoInserter), "HandleMagInserterHandleFullyInsertedEvent")]
         public class bhaptics_Reloaded
         {
-            //[HarmonyPostfix]
-            //public static void Postfix(GunAmmoInserter __instance)
-            //{
-            //    if (!__instance.gun.IsEquippedLocally)
-            //    {
-            //        return;
-            //    }
+            [HarmonyPostfix]
+            public static void Postfix(GunAmmoInserter __instance)
+            {
+                if (!__instance.gun.IsEquippedLocally)
+                {
+                    return;
+                }
 
-            //    owoSkin.Feel("MagazineLoadedArms_" + (__instance.gun.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
-            //}
+                owoSkin.Feel("MagazineLoadedArms_" + (__instance.gun.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
+            }
         }
     }
 }
