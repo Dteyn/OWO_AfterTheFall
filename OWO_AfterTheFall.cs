@@ -249,15 +249,15 @@ namespace OWO_AfterTheFall
         [HarmonyPatch(typeof(Zipline), "StopUse")]
         public class OnZipLineExit
         {
-            //public static void Postfix(Zipline __instance, Vertigo.ECS.Entity pawn, EHandSide handSide)
-            //{
-            //    Vertigo.ECS.Entity localPawn = LightweightDebug.GetLocalPawn();
-            //    if (pawn.Name.Equals(
-            //        localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
-            //    {
-            //        owoSkin.StopZipline(handSide == EHandSide.Right);
-            //    }
-            //}
+            public static void Postfix(Entity pawn)
+            {
+                Vertigo.ECS.Entity localPawn = LightweightDebug.GetLocalPawn();
+                if (pawn.Name.Equals(
+                    localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    owoSkin.StopZipline();
+                }
+            }
         }
         /*
         [HarmonyPatch(typeof(BoosterSpeedBuffCommand), "ApplyBoost")]

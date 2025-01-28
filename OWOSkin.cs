@@ -216,14 +216,8 @@ namespace OWOSKin
 
         public void StopZipline(bool isRight)
         {
-            if (isRight)
-            {
-                ziplineRIsActive = false;
-            }
-            else
-            {
-                ziplineLIsActive = false;
-            }
+            ziplineRIsActive = false;
+            ziplineLIsActive = false;
         }
 
         public void StartZombieGrab()
