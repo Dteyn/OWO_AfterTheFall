@@ -18,14 +18,14 @@ namespace OWO_AfterTheFall
 
         public override void Load()
         {
-            // Plugin startup logic
+            //Plugin startup logic
             Log = base.Log;
-            //Log.LogInfo("OWO_AfterTheFall loaded!");
+            Log.LogInfo("OWO_AfterTheFall loaded!");
             owoSkin = new OWOSkin();
-            //owoSkin.Feel("HeartBeat",0);
-            //// patch all functions
-            //var harmony = new Harmony("owo.patch.afterthefall");
-            //harmony.PatchAll();
+            owoSkin.Feel("HeartBeat",0);
+            // patch all functions
+            var harmony = new Harmony("owo.patch.afterthefall");
+            harmony.PatchAll();
         }
 
         [HarmonyPatch(typeof(Gun), "FireBullet", new System.Type[] { typeof(bool), typeof(bool) })]
@@ -39,7 +39,7 @@ namespace OWO_AfterTheFall
                 {
                     return;
                 }
-                //Log.LogWarning("AMMO TYPE " + __instance.GunData.AmmoType);
+                Log.LogWarning("AMMO TYPE " + __instance.GunData.AmmoType);
                 bool isRight = (__instance.MainHandSide == Vertigo.VR.EHandSide.Right);
                 bool dualWield = (__instance.grabbedHands.Count == 2);
                 if (shotgunsIds.Contains(__instance.GunData.AmmoType))
@@ -64,15 +64,15 @@ namespace OWO_AfterTheFall
                     Vector3 flattenedHit = new Vector3(args.PlayerData.HitDirection.x, 0f, args.PlayerData.HitDirection.z);
                     Vector3 patternOrigin = new Vector3(0f, 0f, -1f);
                     float earlyhitAngle = Vector3.Angle(flattenedHit, patternOrigin);
-                    //Log.LogWarning("HIT " + args.PlayerData.HitDirection);
-                    //Log.LogWarning("Early angle " + earlyhitAngle);
+                    Log.LogWarning("HIT " + args.PlayerData.HitDirection);
+                    Log.LogWarning("Early angle " + earlyhitAngle);
                     Vector3 earlycrossProduct = Vector3.Cross(flattenedHit, patternOrigin);
-                    //Log.LogWarning("Early CROSS " + earlycrossProduct);
+                    Log.LogWarning("Early CROSS " + earlycrossProduct);
                     if (earlycrossProduct.y > 0f) { earlyhitAngle *= -1f; }
                     float myRotation = earlyhitAngle;
                     myRotation *= -1f;
                     if (myRotation < 0f) { myRotation = 360f + myRotation; }
-                    //Log.LogWarning("Rotation " + myRotation);
+                    Log.LogWarning("Rotation " + myRotation);
                     owoSkin.PlayBackHit("Slash", myRotation, 0.0f);
 
                     //Low Health
@@ -122,9 +122,10 @@ namespace OWO_AfterTheFall
                 if (module != null && distance < explosionDistance)
                 {
                     float intensity = (explosionDistance - distance) * 1.5f / explosionDistance;
-                    //tactsuitVr.Feel("ExplosionBelly", intensity);
-                    //tactsuitVr.Feel("ExplosionFeet", intensity);
-                    //tactsuitVr.Feel("ExplosionHead", intensity);
+                    owoSkin.Feel("ExplosionBelly", 0);
+                    owoSkin.Feel("ExplosionFeet", 0);
+                    owoSkin.Feel("ExplosionHead", 0);
+                    //owoSkin.Feel("ExplosionHead", intensity);
                 }
             }
         }
