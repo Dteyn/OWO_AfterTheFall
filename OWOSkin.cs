@@ -25,8 +25,8 @@ namespace OWOSKin
 
         public OWOSkin()
         {
-            //RegisterAllSensationsFiles();
-            //InitializeOWO();
+            RegisterAllSensationsFiles();
+            InitializeOWO();
         }
 
         public void LOG(string logStr, bool isWarning = false)
@@ -262,13 +262,13 @@ namespace OWOSKin
             string keyArm = "RecoilArms" + postfix;
             string keyOtherArm = "RecoilArms" + otherPostfix;
             string keyVest = "Recoil" + gunType + "Vest" + postfix;
-            //Feel(keyHand, intensity);
-            //Feel(keyArm, intensity);
-            //Feel(keyVest, intensity);
+            Feel(keyHand, 0);
+            Feel(keyArm, 0);
+            Feel(keyVest, 0);
             if (dualWield)
             {
-                //Feel(keyOtherHand, intensity);
-                //Feel(keyOtherArm, intensity);
+                Feel(keyOtherHand, 0);
+                Feel(keyOtherArm, 0);
             }
         }
 
