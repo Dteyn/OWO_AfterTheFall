@@ -39,7 +39,7 @@ namespace OWOSKin
 
         private void RegisterAllSensationsFiles()
         {
-            string configPath = Directory.GetCurrentDirectory() + "\\Mods\\OWO";
+            string configPath = Directory.GetCurrentDirectory() + "\\OWO";
             DirectoryInfo d = new DirectoryInfo(configPath);
             FileInfo[] Files = d.GetFiles("*.owo", SearchOption.AllDirectories);
             for (int i = 0; i < Files.Length; i++)

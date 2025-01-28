@@ -7,10 +7,11 @@ using Il2CppSystem;
 using Vertigo.Snowbreed;
 using Vertigo.Snowbreed.Client;
 using Vertigo.VR;
+using BepInEx;
 
 namespace OWO_AfterTheFall
 {
-    [BepInEx.BepInPlugin("org.bepinex.plugins.OWO_AfterTheFall", "After The Fall owo integration", "0.0.1")]
+    [BepInPlugin("org.bepinex.plugins.OWO_AfterTheFall", "After The Fall owo integration", "0.0.1")]
     public class Plugin : BepInEx.IL2CPP.BasePlugin
     {
         internal static new ManualLogSource Log;
@@ -23,7 +24,7 @@ namespace OWO_AfterTheFall
             Log.LogInfo("OWO_AfterTheFall loaded!");
             owoSkin = new OWOSkin();
             owoSkin.Feel("HeartBeat",0);
-            // patch all functions
+            //// patch all functions
             var harmony = new Harmony("owo.patch.afterthefall");
             harmony.PatchAll();
         }
