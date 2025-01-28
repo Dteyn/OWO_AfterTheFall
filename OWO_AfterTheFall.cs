@@ -8,13 +8,12 @@ using Vertigo.Snowbreed;
 using Vertigo.Snowbreed.Client;
 using Vertigo.VR;
 using BepInEx;
-using static Vertigo.Snowbreed.Client.ColoradoPlayState;
 using Vertigo.ECS;
 
 namespace OWO_AfterTheFall
 {
     [BepInPlugin("org.bepinex.plugins.OWO_AfterTheFall", "After The Fall owo integration", "0.0.1")]
-    public class Plugin : BepInEx.IL2CPP.BasePlugin
+    public class Plugin : BepInEx.Unity.IL2CPP.BasePlugin
     {
         internal static new ManualLogSource Log;        
         public static OWOSkin owoSkin;

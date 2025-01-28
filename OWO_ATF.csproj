@@ -40,9 +40,8 @@
       <HintPath>Libraries\BepInEx.Core.dll</HintPath>
       <Aliases>global</Aliases>
     </Reference>
-    <Reference Include="BepInEx.IL2CPP">
-      <HintPath>Libraries\BepInEx.IL2CPP.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="BepInEx.Unity.IL2CPP">
+      <HintPath>Libraries\BepInEx.Unity.IL2CPP.dll</HintPath>
     </Reference>
     <Reference Include="Il2Cppmscorlib">
       <HintPath>Libraries\Il2Cppmscorlib.dll</HintPath>
