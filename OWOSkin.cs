@@ -32,14 +32,14 @@ namespace OWOSKin
         public void LOG(string logStr, bool isWarning = false)
         {
             if (isWarning) Plugin.Log.LogWarning(logStr);
-            else Plugin.Log.LogMessage(logStr);
+            else Plugin.Log.LogInfo(logStr);
         }
 
         public void UpdateHeartBeat(int newRate) => heartBeatRate = newRate; 
 
         private void RegisterAllSensationsFiles()
         {
-            string configPath = Directory.GetCurrentDirectory() + "\\OWO";
+            string configPath = Directory.GetCurrentDirectory() + "\\BepinEx\\Plugins\\OWO";
             DirectoryInfo d = new DirectoryInfo(configPath);
             FileInfo[] Files = d.GetFiles("*.owo", SearchOption.AllDirectories);
             for (int i = 0; i < Files.Length; i++)
@@ -165,22 +165,23 @@ namespace OWOSKin
         }
         public async Task ZipLineFuncAsync()
         {
-            string toFeel = "";
+            LOG("ZIPLINE FUNC");
+            //string toFeel = "";
 
-            while (ziplineRIsActive || ziplineLIsActive)
-            {
-                if (ziplineRIsActive)
-                    toFeel = "Zipline_R";
+            //while (ziplineRIsActive || ziplineLIsActive)
+            //{
+            //    if (ziplineRIsActive)
+            //        toFeel = "Zipline_R";
 
-                if (ziplineLIsActive)
-                    toFeel = "Zipline_L";
+            //    if (ziplineLIsActive)
+            //        toFeel = "Zipline_L";
 
-                if (ziplineRIsActive && ziplineLIsActive)
-                    toFeel = "Zipline_RL";
+            //    if (ziplineRIsActive && ziplineLIsActive)
+            //        toFeel = "Zipline_RL";
 
-                Feel(toFeel, 2);
-                await Task.Delay(500);
-            }
+            //    Feel(toFeel, 2);
+            //    await Task.Delay(500);
+            //}
 
             ziplineIsActive = false;
         }
