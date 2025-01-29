@@ -42,15 +42,17 @@ namespace OWO_AfterTheFall
                 {
                     return;
                 }
-                Log.LogWarning("AMMO TYPE " + __instance.GunData.AmmoType);
+                Log.LogInfo("AMMO TYPE " + __instance.GunData.AmmoType);
                 bool isRight = (__instance.MainHandSide == Vertigo.VR.EHandSide.Right);
                 bool dualWield = (__instance.grabbedHands.Count == 2);
                 if (shotgunsIds.Contains(__instance.GunData.AmmoType))
                 {
+                    Log.LogInfo("is dualwield -> " + dualWield +" | is right -> " + isRight);
                     owoSkin.ShootRecoil("Shotgun", isRight, dualWield);
                 }
                 else
                 {
+                    Log.LogInfo("is dualwield -> " + dualWield +" | is right -> " + isRight);
                     owoSkin.ShootRecoil("Pistol", isRight, dualWield);
                 }
             }
@@ -125,9 +127,7 @@ namespace OWO_AfterTheFall
                 if (module != null && distance < explosionDistance)
                 {
                     float intensity = (explosionDistance - distance) * 1.5f / explosionDistance;
-                    owoSkin.Feel("ExplosionBelly", 0);
-                    owoSkin.Feel("ExplosionFeet", 0);
-                    owoSkin.Feel("ExplosionHead", 0);
+                    owoSkin.Feel("Explosion", 0);
                     //owoSkin.Feel("ExplosionHead", intensity);
                 }
             }

@@ -135,8 +135,6 @@ namespace OWOSKin
 
         public void Feel(String key, int Priority, float intensity = 1.0f, float duration = 1.0f)
         {
-            LOG("DEBUG-LOG-SENSATION: " + key);
-
             if (FeedbackMap.ContainsKey(key))
             {
                 OWO.Send(FeedbackMap[key].WithPriority(Priority));
@@ -162,25 +160,25 @@ namespace OWOSKin
                 await Task.Delay(2000);                
             }
         }
+
         public async Task ZipLineFuncAsync()
         {
-            LOG("ZIPLINE FUNC");
-            //string toFeel = "";
+            string toFeel = "";
 
-            //while (ziplineRIsActive || ziplineLIsActive)
-            //{
-            //    if (ziplineRIsActive)
-            //        toFeel = "Zipline_R";
+            while (ziplineRIsActive || ziplineLIsActive)
+            {
+                if (ziplineRIsActive)
+                    toFeel = "Zipline_R";
 
-            //    if (ziplineLIsActive)
-            //        toFeel = "Zipline_L";
+                if (ziplineLIsActive)
+                    toFeel = "Zipline_L";
 
-            //    if (ziplineRIsActive && ziplineLIsActive)
-            //        toFeel = "Zipline_RL";
+                if (ziplineRIsActive && ziplineLIsActive)
+                    toFeel = "Zipline_RL";
 
-            //    Feel(toFeel, 2);
-            //    await Task.Delay(500);
-            //}
+                Feel(toFeel, 2);
+                await Task.Delay(500);
+            }
 
             ziplineIsActive = false;
         }
@@ -247,21 +245,18 @@ namespace OWOSKin
             // Melee feedback pattern
             if (suitDisabled) { return; }
             if (gunType == "Pistol") intensity = 0.8f;
-            string postfix = "_L";
-            string otherPostfix = "_R";
-            if (isRightHand) { postfix = "_R"; otherPostfix = "_L"; }
-            string keyHand = "RecoilHands" + postfix;
-            string keyOtherHand = "RecoilHands" + otherPostfix;
-            string keyArm = "RecoilArms" + postfix;
-            string keyOtherArm = "RecoilArms" + otherPostfix;
-            string keyVest = "Recoil" + gunType + "Vest" + postfix;
-            Feel(keyHand, 0);
-            Feel(keyArm, 0);
-            Feel(keyVest, 0);
+            string postfix = "L";
+            string otherPostfix = "R";
+            if (isRightHand) { postfix = "R"; otherPostfix = "L"; }
+            //string keyHand = "RecoilHands" + postfix;
+            //string keyOtherHand = "RecoilHands" + otherPostfix;
+            //string keyArm = "Recoil_" + postfix;
+            //string keyOtherArm = "Recoil_" + otherPostfix;
+            string keyVest = gunType + "Recoil_";
+
+            Feel(keyVest + postfix, 0);
             if (dualWield)
-            {
-                Feel(keyOtherHand, 0);
-                Feel(keyOtherArm, 0);
+            { Feel(keyVest + "LR", 1);
             }
         }
 
