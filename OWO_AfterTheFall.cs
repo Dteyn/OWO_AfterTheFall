@@ -69,16 +69,33 @@ namespace OWO_AfterTheFall
                     Vector3 flattenedHit = new Vector3(args.PlayerData.HitDirection.x, 0f, args.PlayerData.HitDirection.z);
                     Vector3 patternOrigin = new Vector3(0f, 0f, -1f);
                     float earlyhitAngle = Vector3.Angle(flattenedHit, patternOrigin);
-                    Log.LogWarning("HIT " + args.PlayerData.HitDirection);
-                    Log.LogWarning("Early angle " + earlyhitAngle);
+                    Log.LogInfo("HIT " + args.PlayerData.HitDirection);
+                    Log.LogInfo("Early angle " + earlyhitAngle);
                     Vector3 earlycrossProduct = Vector3.Cross(flattenedHit, patternOrigin);
-                    Log.LogWarning("Early CROSS " + earlycrossProduct);
+                    Log.LogInfo("Early CROSS " + earlycrossProduct);
                     if (earlycrossProduct.y > 0f) { earlyhitAngle *= -1f; }
                     float myRotation = earlyhitAngle;
                     myRotation *= -1f;
                     if (myRotation < 0f) { myRotation = 360f + myRotation; }
-                    Log.LogWarning("Rotation " + myRotation);
-                    owoSkin.PlayBackHit("Slash", myRotation, 0.0f);
+                    
+                    Log.LogInfo("Rotation " + myRotation);
+
+
+                    if(myRotation >= 0 && myRotation <= 180)
+                    {
+                        Log.LogInfo("ESPALDA");
+                        if (myRotation >= 0 && myRotation <= 90) Log.LogInfo("IZQUIERDa");
+                        else Log.LogInfo("DERECHA");
+                    }
+                    else
+                    { 
+                        Log.LogInfo("FRENTE");
+                        if (myRotation >= 270 && myRotation <= 359) Log.LogInfo("IZQUIERDA");
+                        else Log.LogInfo("DERCHA");
+                    }
+
+
+                    owoSkin.PlayBackHit("Slash", myRotation);
 
                     //Low Health
                     if (__instance.Health < (__instance.MaxHealth * 25 / 100))

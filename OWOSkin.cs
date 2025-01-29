@@ -34,7 +34,7 @@ namespace OWOSKin
             else Plugin.Log.LogInfo(logStr);
         }
 
-        public void UpdateHeartBeat(int newRate) => heartBeatRate = newRate; 
+        public void UpdateHeartBeat(int newRate) => heartBeatRate = newRate;
 
         private void RegisterAllSensationsFiles()
         {
@@ -157,7 +157,7 @@ namespace OWOSKin
             while (zombieGrabIsActive)
             {
                 Feel("JuggernautGrab", 0);
-                await Task.Delay(2000);                
+                await Task.Delay(2000);
             }
         }
 
@@ -235,7 +235,7 @@ namespace OWOSKin
         {
             StopHeartBeat();
             StopZombieGrab();
-            StopZipline();            
+            StopZipline();
 
             OWO.Stop();
         }
@@ -256,18 +256,28 @@ namespace OWOSKin
 
             Feel(keyVest + postfix, 0);
             if (dualWield)
-            { Feel(keyVest + "LR", 1);
+            {
+                Feel(keyVest + "LR", 1);
             }
         }
 
-        public void PlayBackHit(String key, float xzAngle, float yShift)
+        public void PlayBackHit(String key, float myRotation)
         {
-            // two parameters can be given to the pattern to move it on the vest:
-            // 1. An angle in degrees [0, 360] to turn the pattern to the left
-            // 2. A shift [-0.5, 0.5] in y-direction (up and down) to move it up or down
+            Sensation hitSensation = Sensation.Parse("100,3,76,0,200,0,Impact");
+
+            if (myRotation >= 0 && myRotation <= 180)
+            {
+                if (myRotation >= 0 && myRotation <= 90) hitSensation = hitSensation.WithMuscles(Muscle.Dorsal_L, Muscle.Lumbar_L); //izquierda
+                else hitSensation = hitSensation.WithMuscles(Muscle.Dorsal_R, Muscle.Lumbar_R); //derecha
+            }
+            else
+            {
+                if (myRotation >= 270 && myRotation <= 359) hitSensation = hitSensation.WithMuscles(Muscle.Pectoral_L, Muscle.Abdominal_L);//izquierda
+                else hitSensation.WithMuscles(Muscle.Pectoral_R, Muscle.Abdominal_R); //derecha
+            }
+
             if (suitDisabled) { return; }
-            OWO.Send(OWOGame.Sensation.Dart);
-            //BhapticsSDK2.Play(key.ToLower(), 1f, 1f, xzAngle, yShift);
+            OWO.Send(hitSensation);
         }
     }
 }
