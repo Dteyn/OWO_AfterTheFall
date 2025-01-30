@@ -106,7 +106,7 @@ namespace OWOSKin
         public string[] getIPsFromFile(string filename)
         {
             List<string> ips = new List<string>();
-            string filePath = Directory.GetCurrentDirectory() + "\\Mods\\" + filename;
+            string filePath = Directory.GetCurrentDirectory() + "\\BepinEx\\Plugins\\OWO" + filename;
             if (File.Exists(filePath))
             {
                 LOG("Manual IP file found: " + filePath);
