@@ -229,7 +229,7 @@ namespace OWO_AfterTheFall
                 if (__instance.identityModule.Entity.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    owoSkin.Feel("Shockwave_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 0);
+                    owoSkin.Feel("ShockwaveRecoil_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 0);
                 }
             }
         }
@@ -243,7 +243,7 @@ namespace OWO_AfterTheFall
                 if (__instance.identityModule.Entity.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase) && __instance.CanBeActivated)
                 {
-                    owoSkin.Feel("Sawblade_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 0);
+                    owoSkin.Feel("SawbladeRecoil_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 0);
                 }
             }
         }
