@@ -65,7 +65,7 @@ namespace OWOSKin
         {
             LOG("Initializing OWO skin");
 
-            var gameAuth = GameAuth.Create(AllBakedSensations()).WithId("0"); ;
+            var gameAuth = GameAuth.Create(AllBakedSensations()).WithId("47766261"); ;
 
             OWO.Configure(gameAuth);
             string[] myIPs = getIPsFromFile("OWO_Manual_IP.txt");
