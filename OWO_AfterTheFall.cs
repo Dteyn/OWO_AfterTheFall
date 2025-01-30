@@ -25,7 +25,7 @@ namespace OWO_AfterTheFall
             Log.LogInfo("OWO_AfterTheFall loaded!");                        
             
             owoSkin = new OWOSkin();
-            owoSkin.Feel("HeartBeat",0);
+            owoSkin.Feel("HeartBeat",1);
             //// patch all functions
             var harmony = new Harmony("owo.patch.afterthefall");
             harmony.PatchAll();
@@ -108,7 +108,7 @@ namespace OWO_AfterTheFall
                     //Downed, frozen
                     if (__instance.IsDowned)
                     {
-                        owoSkin.Feel("Frozen", 0);
+                        owoSkin.Feel("Frozen", 2);
                         owoSkin.UpdateHeartBeat(4000);
                         owoSkin.StartHeartBeat();
                     }
@@ -125,7 +125,7 @@ namespace OWO_AfterTheFall
                 owoSkin.StopAllHapticFeedback();
                 if(__instance.SessionEndingType == SessionGameSystem.ESessionEndingType.Failed)
                 {
-                    owoSkin.Feel("Death", 0);
+                    owoSkin.Feel("Death", 4);
                 }
             }
         }
@@ -144,7 +144,7 @@ namespace OWO_AfterTheFall
                 if (module != null && distance < explosionDistance)
                 {
                     float intensity = (explosionDistance - distance) * 1.5f / explosionDistance;
-                    owoSkin.Feel("Explosion", 0);
+                    owoSkin.Feel("Explosion", 3);
                 }
             }
         }
@@ -157,7 +157,7 @@ namespace OWO_AfterTheFall
                 Vertigo.ECS.Entity localPawn = LightweightDebug.GetLocalPawn();
                 if (__instance.Entity.Name.Equals(localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    owoSkin.Feel("Healing", 0);
+                    owoSkin.Feel("Healing", 2);
                     if (__instance.Health >= (__instance.MaxHealth * 25 / 100))
                     {
                         //stop heartbeat lowhealth
@@ -215,7 +215,7 @@ namespace OWO_AfterTheFall
                 if (__instance.Owner.identityModule.Entity.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase) && __instance.Owner.CanBeActivated)
                 {
-                    owoSkin.Feel("MissileRecoil_" + (__instance.Owner.isEquippedOnLeftHand ? "L" : "R"), 0);
+                    owoSkin.Feel("MissileRecoil_" + (__instance.Owner.isEquippedOnLeftHand ? "L" : "R"), 3);
                 }
             }
         }
@@ -229,7 +229,7 @@ namespace OWO_AfterTheFall
                 if (__instance.identityModule.Entity.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    owoSkin.Feel("ShockwaveRecoil_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 0);
+                    owoSkin.Feel("ShockwaveRecoil_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 3);
                 }
             }
         }
@@ -243,7 +243,7 @@ namespace OWO_AfterTheFall
                 if (__instance.identityModule.Entity.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase) && __instance.CanBeActivated)
                 {
-                    owoSkin.Feel("SawbladeRecoil_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 0);
+                    owoSkin.Feel("SawbladeRecoil_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 3);
                 }
             }
         }
@@ -316,7 +316,7 @@ namespace OWO_AfterTheFall
                 if (entity.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    owoSkin.Feel("Padlock_" + (handSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
+                    owoSkin.Feel("Padlock_" + (handSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 2);
                 }
             }
         }
@@ -349,7 +349,7 @@ namespace OWO_AfterTheFall
                 {
                     return;
                 }
-                owoSkin.Feel("MagazineEjected_" + (__instance.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
+                owoSkin.Feel("MagazineEjected_" + (__instance.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 1);
             }
         }
 
@@ -364,7 +364,7 @@ namespace OWO_AfterTheFall
                     return;
                 }
 
-                owoSkin.Feel("MagazineReloading_" + (__instance.gun.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
+                owoSkin.Feel("MagazineReloading_" + (__instance.gun.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 1);
             }
         }
 
@@ -379,7 +379,7 @@ namespace OWO_AfterTheFall
                     return;
                 }
 
-                owoSkin.Feel("MagazineLoadedArms_" + (__instance.gun.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
+                owoSkin.Feel("MagazineLoaded_" + (__instance.gun.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 1);
             }
         }
     }

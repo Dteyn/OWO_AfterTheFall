@@ -147,7 +147,7 @@ namespace OWOSKin
         {
             while (heartBeatIsActive)
             {
-                Feel("HeartBeat", 0);
+                Feel("HeartBeat", 1);
                 await Task.Delay(heartBeatRate);
             }
         }
@@ -156,7 +156,7 @@ namespace OWOSKin
         {
             while (zombieGrabIsActive)
             {
-                Feel("JuggernautGrab", 0);
+                Feel("JuggernautGrab", 3);
                 await Task.Delay(2000);
             }
         }
@@ -249,10 +249,10 @@ namespace OWOSKin
             if (isRightHand) { postfix = "R"; otherPostfix = "L"; }
             string keyVest = gunType + "Recoil_";
 
-            Feel(keyVest + postfix, 0);
+            Feel(keyVest + postfix, 2);
             if (dualWield)
             {
-                Feel(keyVest + "LR", 1);
+                Feel(keyVest + "LR", 2);
             }
         }
 
@@ -272,7 +272,7 @@ namespace OWOSKin
             }
 
             if (suitDisabled) { return; }
-            OWO.Send(hitSensation);
+            OWO.Send(hitSensation.WithPriority(3));
         }
     }
 }
