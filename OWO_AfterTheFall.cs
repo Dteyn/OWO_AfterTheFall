@@ -47,12 +47,12 @@ namespace OWO_AfterTheFall
                 bool dualWield = (__instance.grabbedHands.Count == 2);
                 if (shotgunsIds.Contains(__instance.GunData.AmmoType))
                 {
-                    Log.LogInfo("is dualwield -> " + dualWield +" | is right -> " + isRight);
+                    //Log.LogInfo("is dualwield -> " + dualWield +" | is right -> " + isRight);
                     owoSkin.ShootRecoil("Shotgun", isRight, dualWield);
                 }
                 else
                 {
-                    Log.LogInfo("is dualwield -> " + dualWield +" | is right -> " + isRight);
+                    //Log.LogInfo("is dualwield -> " + dualWield +" | is right -> " + isRight);
                     owoSkin.ShootRecoil("Pistol", isRight, dualWield);
                 }
             }
@@ -215,7 +215,7 @@ namespace OWO_AfterTheFall
                 if (__instance.Owner.identityModule.Entity.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase) && __instance.Owner.CanBeActivated)
                 {
-                    owoSkin.Feel("MissilesArms_" + (__instance.Owner.isEquippedOnLeftHand ? "L" : "R"), 0);
+                    owoSkin.Feel("MissileRecoil_" + (__instance.Owner.isEquippedOnLeftHand ? "L" : "R"), 0);
                 }
             }
         }
@@ -229,7 +229,7 @@ namespace OWO_AfterTheFall
                 if (__instance.identityModule.Entity.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    owoSkin.Feel("ShockwaveArms_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 0);
+                    owoSkin.Feel("Shockwave_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 0);
                 }
             }
         }
@@ -243,7 +243,7 @@ namespace OWO_AfterTheFall
                 if (__instance.identityModule.Entity.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase) && __instance.CanBeActivated)
                 {
-                    owoSkin.Feel("SawbladeArms_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 0);
+                    owoSkin.Feel("Sawblade_" + (__instance.isEquippedOnLeftHand ? "L" : "R"), 0);
                 }
             }
         }
@@ -316,7 +316,7 @@ namespace OWO_AfterTheFall
                 if (entity.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    owoSkin.Feel("PadlockArms_" + (handSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
+                    owoSkin.Feel("Padlock_" + (handSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
                 }
             }
         }
@@ -349,7 +349,7 @@ namespace OWO_AfterTheFall
                 {
                     return;
                 }
-                owoSkin.Feel("MagazineEjectedArms_" + (__instance.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
+                owoSkin.Feel("MagazineEjected_" + (__instance.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
             }
         }
 
@@ -364,7 +364,7 @@ namespace OWO_AfterTheFall
                     return;
                 }
 
-                owoSkin.Feel("MagazineReloadingArms_" + (__instance.gun.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
+                owoSkin.Feel("MagazineReloading_" + (__instance.gun.MainHandSide == Vertigo.VR.EHandSide.Right ? "R" : "L"), 0);
             }
         }
 
