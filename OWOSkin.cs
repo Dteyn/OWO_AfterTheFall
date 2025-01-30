@@ -242,16 +242,11 @@ namespace OWOSKin
 
         public void ShootRecoil(string gunType, bool isRightHand, bool dualWield = false, float intensity = 1.0f)
         {
-            // Melee feedback pattern
             if (suitDisabled) { return; }
             if (gunType == "Pistol") intensity = 0.8f;
             string postfix = "L";
             string otherPostfix = "R";
             if (isRightHand) { postfix = "R"; otherPostfix = "L"; }
-            //string keyHand = "RecoilHands" + postfix;
-            //string keyOtherHand = "RecoilHands" + otherPostfix;
-            //string keyArm = "Recoil_" + postfix;
-            //string keyOtherArm = "Recoil_" + otherPostfix;
             string keyVest = gunType + "Recoil_";
 
             Feel(keyVest + postfix, 0);
@@ -267,13 +262,13 @@ namespace OWOSKin
 
             if (myRotation >= 0 && myRotation <= 180)
             {
-                if (myRotation >= 0 && myRotation <= 90) hitSensation = hitSensation.WithMuscles(Muscle.Dorsal_L, Muscle.Lumbar_L); //izquierda
-                else hitSensation = hitSensation.WithMuscles(Muscle.Dorsal_R, Muscle.Lumbar_R); //derecha
+                if (myRotation >= 0 && myRotation <= 90) hitSensation = hitSensation.WithMuscles(Muscle.Dorsal_L, Muscle.Lumbar_L);
+                else hitSensation = hitSensation.WithMuscles(Muscle.Dorsal_R, Muscle.Lumbar_R);
             }
             else
             {
-                if (myRotation >= 270 && myRotation <= 359) hitSensation = hitSensation.WithMuscles(Muscle.Pectoral_L, Muscle.Abdominal_L);//izquierda
-                else hitSensation.WithMuscles(Muscle.Pectoral_R, Muscle.Abdominal_R); //derecha
+                if (myRotation >= 270 && myRotation <= 359) hitSensation = hitSensation.WithMuscles(Muscle.Pectoral_L, Muscle.Abdominal_L);
+                else hitSensation.WithMuscles(Muscle.Pectoral_R, Muscle.Abdominal_R);
             }
 
             if (suitDisabled) { return; }

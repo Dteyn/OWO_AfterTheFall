@@ -145,7 +145,6 @@ namespace OWO_AfterTheFall
                 {
                     float intensity = (explosionDistance - distance) * 1.5f / explosionDistance;
                     owoSkin.Feel("Explosion", 0);
-                    //owoSkin.Feel("ExplosionHead", intensity);
                 }
             }
         }
@@ -323,7 +322,7 @@ namespace OWO_AfterTheFall
         }
 
         [HarmonyPatch(typeof(PlayerAudioModule), "PlayFootstepLocalPlayer")]
-        public class bhaptics_FootStep
+        public class owo_FootStep
         {
             private static bool rightFoot = false;
 
@@ -334,14 +333,14 @@ namespace OWO_AfterTheFall
                 if (__instance.Entity.Name.Equals(
                     localPawn.Name, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    owoSkin.Feel("FootStep_" + (bhaptics_FootStep.rightFoot ? "R" : "L"), 0);
-                    bhaptics_FootStep.rightFoot = !bhaptics_FootStep.rightFoot;
+                    owoSkin.Feel("FootStep_" + (owo_FootStep.rightFoot ? "R" : "L"), 0);
+                    owo_FootStep.rightFoot = !owo_FootStep.rightFoot;
                 }
             }
         }
 
         [HarmonyPatch(typeof(Gun), "OnMagazineEjected")]
-        public class bhaptics_EjectMagazine
+        public class owo_EjectMagazine
         {
             [HarmonyPostfix]
             public static void Postfix(Gun __instance)
@@ -355,7 +354,7 @@ namespace OWO_AfterTheFall
         }
 
         [HarmonyPatch(typeof(GunAmmoInserter), "HandleAmmoInsertedEvent")]
-        public class bhaptics_Reloading
+        public class owo_Reloading
         {
             [HarmonyPostfix]
             public static void Postfix(GunAmmoInserter __instance)
@@ -370,7 +369,7 @@ namespace OWO_AfterTheFall
         }
 
         [HarmonyPatch(typeof(GunAmmoInserter), "HandleMagInserterHandleFullyInsertedEvent")]
-        public class bhaptics_Reloaded
+        public class owo_Reloaded
         {
             [HarmonyPostfix]
             public static void Postfix(GunAmmoInserter __instance)
