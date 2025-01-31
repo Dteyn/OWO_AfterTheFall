@@ -143,6 +143,11 @@ namespace OWOSKin
             else LOG("Feedback not registered: " + key);
         }
 
+        public void FeelExplosion(int intensity)
+        {
+            OWO.Send(FeedbackMap["Explosion"].MultiplyIntensityBy(intensity).WithPriority(3));
+        }
+
         public async Task HeartBeatFuncAsync()
         {
             while (heartBeatIsActive)

@@ -143,8 +143,8 @@ namespace OWO_AfterTheFall
 
                 if (module != null && distance < explosionDistance)
                 {
-                    float intensity = (explosionDistance - distance) * 1.5f / explosionDistance;
-                    owoSkin.Feel("Explosion", 3);
+                    int intensity = Mathf.CeilToInt(((explosionDistance - distance) * 1.1f / explosionDistance) * 100);
+                    owoSkin.FeelExplosion(intensity);
                 }
             }
         }
