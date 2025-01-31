@@ -4,9 +4,9 @@
 3~Zipline_R~60,20,80,0,0,0,Fall|0%100,4%80~environment-5~#
 4~Death~40,11,80,0,900,0,Hit|0%100,1%100,3%100,2%100,7%100,9%100,8%100,6%100~health-3~Damage#
 5~Healing~100,2,65,200,0,0,Hit|3%100,2%100,9%100,8%100&70,1,65,0,0,0,Hit|3%41,2%43,9%44,8%48,6%100,7%100,1%100,0%100&70,2,65,0,200,0,Heal|1%100,0%100,6%100,7%100~health-2~#
-6~PistolRecoil_L~11,1,55,0,0,0,|5%100~weapon-2~Weapons#
-7~PistolRecoil_R~11,1,55,0,0,0,|4%100~weapon-2~Weapons#
-8~PistolRecoil_LR~11,1,55,0,0,0,|4%100,5%100~weapon-2~Weapons#
+6~PistolRecoil_L~11,1,70,0,0,0,|5%100~weapon-2~Weapons#
+7~PistolRecoil_R~11,1,70,0,0,0,|4%100~weapon-2~Weapons#
+8~PistolRecoil_LR~11,1,70,0,0,0,|4%100,5%100~weapon-2~Weapons#
 9~ShotgunRecoil_L~100,1,80,0,0,0,Recoil1|5%100&50,1,80,0,0,0,Recoil2|1%100~default~Weapons#
 10~ShotgunRecoil_R~100,1,80,0,0,0,Recoil1|4%100&50,1,80,0,0,0,Recoil2|0%100~default~Weapons#
 11~ShotgunRecoil_RL~80,1,70,0,0,0,Recoil1|5%100,4%100&80,1,60,0,0,0,Recoil2|0%100,1%100~default~Weapons#
