@@ -144,6 +144,7 @@ namespace OWO_AfterTheFall
                 if (module != null && distance < explosionDistance)
                 {
                     int intensity = Mathf.CeilToInt(((explosionDistance - distance) * 1.1f / explosionDistance) * 100);
+                    Log.LogInfo("Intensity will be " + intensity);
                     owoSkin.FeelExplosion(intensity);
                 }
             }
