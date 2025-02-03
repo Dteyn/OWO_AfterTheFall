@@ -5,6 +5,7 @@ using OWOGame;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using UnityEngine;
 
 
 namespace OWOSKin
@@ -145,7 +146,7 @@ namespace OWOSKin
 
         public void FeelExplosion(int intensity)
         {
-            OWO.Send(FeedbackMap["Explosion"].MultiplyIntensityBy(intensity).WithPriority(3));
+            OWO.Send(FeedbackMap["Explosion"].WithMuscles(Muscle.All.WithIntensity(Mathf.Clamp(intensity, 0, 100))).WithPriority(3));
         }
 
         public async Task HeartBeatFuncAsync()
