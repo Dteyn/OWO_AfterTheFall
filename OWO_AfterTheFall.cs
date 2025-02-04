@@ -12,7 +12,7 @@ using Vertigo.ECS;
 
 namespace OWO_AfterTheFall
 {
-    [BepInPlugin("org.bepinex.plugins.OWO_AfterTheFall", "After The Fall owo integration", "0.0.1")]
+    [BepInPlugin("org.bepinex.plugins.OWO_AfterTheFall", "After The Fall owo integration", "1.0.0")]
     public class Plugin : BepInEx.Unity.IL2CPP.BasePlugin
     {
         internal static new ManualLogSource Log;        
