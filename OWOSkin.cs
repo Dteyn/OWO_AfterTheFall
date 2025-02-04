@@ -220,6 +220,7 @@ namespace OWOSKin
 
         public void StopZipline()
         {
+            OWO.Stop();
             ziplineRIsActive = false;
             ziplineLIsActive = false;
         }
