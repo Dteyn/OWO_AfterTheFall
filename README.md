@@ -2,6 +2,8 @@
 
 This repo hosts a build of the OWO AfterTheFall mod for **BepInEx 6.0.0-pre1**.
 
+The main repo hosts a version for BepInEx 6.0.0-pre2, which is incompatible with 6.0.0-pre1 due to changes made between pre1 and pre2. If you are using mods which require BIE 6.0.0-pre1, you'll need this version instead of the one on the main repo.
+
 No changes have been mode aside from changing references to [BepInEx 6.0.0-pre1](https://github.com/BepInEx/BepInEx/releases/tag/v6.0.0-pre.1) and recompiling.
 
 # Original README.md below:
